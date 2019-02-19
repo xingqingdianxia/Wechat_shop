@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import request from '@/utils/request'
 export default {
   data: {
     imgUrls: [],
@@ -34,22 +35,28 @@ export default {
   },
   created() {
     let page = this;
-    wx.request({
-      url: "https://itjustfun.cn/api/public/v1/home/swiperdata",
-      success(res) {
-        // console.log(res)
-        page.imgUrls = res.data.data;
-      }
-    }),
-      wx.request({
-        url: "https://itjustfun.cn/api/public/v1/home/catitems",
-        // 箭头函数可以修正this的指向
-        success:(res)=> {
-          // console.log(this.menus)
+    // wx.request({
+    //   url: "https://itjustfun.cn/api/public/v1/home/swiperdata",
+    //   success(res) {
+    //     // console.log(res)
+    //     page.imgUrls = res.data.data;
+    //   }
+    // }),
+      // wx.request({
+      //   url: "https://itjustfun.cn/api/public/v1/home/catitems",
+      //   // 箭头函数可以修正this的指向
+      //   success:(res)=> {
+      //     // console.log(this.menus)
+      //     this.menus = res.data.data
+      //     console.log(res)
+      //   }
+      // });
+      request ("https://itjustfun.cn/api/public/v1/home/swiperdata").then(res=>{
+        this.imgUrls = res.data.data;
+      })
+      request ("https://itjustfun.cn/api/public/v1/home/catitems").then(res=>{
           this.menus = res.data.data
-          console.log(res)
-        }
-      });
+      })
   }
 };
 </script>
